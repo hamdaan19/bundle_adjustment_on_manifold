@@ -48,3 +48,6 @@ RUN git clone https://github.com/opencv/opencv.git --branch 4.6.0 --single-branc
     cd opencv && mkdir build && cd build && \
     cmake .. && \
     make && sudo make install && cd ../..  
+
+WORKDIR /
+CMD ["/bin/bash"]
