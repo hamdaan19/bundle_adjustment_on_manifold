@@ -6,9 +6,9 @@ set (CMAKE_CXX_FLAGS "-lstdc++fs -std=c++17")
 set(CMAKE_BUILD_TYPE Release)
 
 find_package(OpenCV 4.6.0 REQUIRED)
-find_package(Eigen3 3.3.4 EXACT REQUIRED)
+find_package(Eigen3 3.3.4 REQUIRED)
 find_package(Ceres 2.2.0 EXACT REQUIRED)
-find_package(Sophus REQUIRED)
+find_package(Sophus 1.22.10 REQUIRED)
 
 include_directories(
     include
