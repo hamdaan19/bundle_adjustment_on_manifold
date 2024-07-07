@@ -9,7 +9,7 @@ cd bundle_adjustment_on_manifold
 docker build -t bundle_adjuster .
 
 # Create a container from the image with a name. Note that you need to run this only once.
-docker create --privileged -it -v ${PWD}:/home/bundle_adjustment_on_manifold -v /dev:/dev --name my_bundle_adjuster bundle_adjuster
+docker create --privileged -it -v ${PWD}:/home/bundle_adjustment_on_manifold --name my_bundle_adjuster bundle_adjuster
 
 # Start the container
 docker start my_bundle_adjuster
@@ -31,5 +31,5 @@ cmake ..
 make -j4
 
 # Run the executable after successful compilation
-./bundle_adjuster_on_manifold
+./bundle_adjuster_on_manifold your/path/to/BAL/dataset.txt
 ```
