@@ -29,3 +29,13 @@ target_link_libraries(
     ${EIGEN3_LIBS}
     Sophus::Sophus
 )
+
+add_executable(
+    frontend
+    src/frontend.cc
+)
+target_link_libraries(
+    frontend 
+    ${OpenCV_LIBRARIES} 
+    ${EIGEN3_LIBS}
+)

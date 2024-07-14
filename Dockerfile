@@ -43,11 +43,25 @@ RUN git clone https://github.com/strasdat/Sophus.git --branch 1.22.10 --single-b
     cmake .. && \
     make && sudo make install && cd ../..  
 
-# Installing OpenCV
-RUN git clone https://github.com/opencv/opencv.git --branch 4.6.0 --single-branch && \
+
+# Installing OpenCV and OpenCV contrib
+RUN git clone https://github.com/opencv/opencv_contrib.git --branch 4.10.0 --single-branch && \ 
+    git clone https://github.com/opencv/opencv.git --branch 4.10.0 --single-branch && \
     cd opencv && mkdir build && cd build && \
-    cmake .. && \
+    cmake -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && \
     make && sudo make install && cd ../..  
 
+# Installing zsh
+RUN sudo apt-get install -y zsh
+# Installing Oh-My-Zsh
+# Install Oh my zsh
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" -- \
+    -p git \
+    -p docker-compose \
+    -p docker \
+    -p https://github.com/zsh-users/zsh-autosuggestions \
+    -p https://github.com/zsh-users/zsh-completions \
+    -p https://github.com/zsh-users/zsh-syntax-highlighting 
+
 WORKDIR /
-CMD ["/bin/bash"]
+CMD ["/bin/zsh"]
