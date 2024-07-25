@@ -43,12 +43,16 @@ RUN git clone https://github.com/strasdat/Sophus.git --branch 1.22.10 --single-b
     cmake .. && \
     make && sudo make install && cd ../..  
 
+RUN sudo apt-get install -y net-tools
+
+# Installing GTK
+RUN sudo apt-get update && sudo apt install -y libgtk2.0-dev pkg-config
 
 # Installing OpenCV and OpenCV contrib
 RUN git clone https://github.com/opencv/opencv_contrib.git --branch 4.10.0 --single-branch && \ 
     git clone https://github.com/opencv/opencv.git --branch 4.10.0 --single-branch && \
     cd opencv && mkdir build && cd build && \
-    cmake -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules .. && \
+    cmake -DCMAKE_BUILD_TYPE=RELEASE -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules -D WITH_QT=OFF -DWITH_GTK_2_x=ON .. && \
     make && sudo make install && cd ../..  
 
 # Installing zsh
@@ -63,5 +67,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/t
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-syntax-highlighting 
 
-WORKDIR /
+RUN sudo apt-get update && sudo apt-get install -qqy x11-apps
+
+WORKDIR /home/bundle_adjustment_on_manifold
 CMD ["/bin/zsh"]

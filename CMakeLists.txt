@@ -33,6 +33,8 @@ target_link_libraries(
 add_executable(
     frontend
     src/frontend.cc
+    src/Utils.cc
+    src/Feature.cc
 )
 target_link_libraries(
     frontend 
