@@ -1,3 +1,6 @@
+#ifndef FEATURE_H
+#define FEATURE_H
+
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/features2d.hpp>
@@ -5,7 +8,22 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
+#include <unordered_set>
+
 class SIFTFeature {
+
+    /*
+    HOW TO USE THIS CLASS:
+
+    // sift._detector->detectAndCompute(imgL0, cv::noArray(), keyPointsL0, descriptorsL0);
+    // sift._detector->detectAndCompute(imgR0, cv::noArray(), keyPointsR0, descriptorsR0);
+    // sift._detector->detectAndCompute(imgL1, cv::noArray(), keyPointsL1, descriptorsL1);
+
+    // std::vector<std::vector<cv::DMatch>> goodCommonMatches;
+
+    // sift.match(descriptorsL0, descriptorsR0, descriptorsL1, &goodCommonMatches); 
+
+    */
 
     public:
 
@@ -64,6 +82,8 @@ class ORBFeature {
             cv::Mat trainDescriptor0,
             cv::Mat trainDescriptor1,
             std::vector<std::vector<cv::DMatch>> *goodCommonMatches,
+            std::vector<int> *queryMatchedKeyPointIndices = nullptr,
+            std::vector<int> *train1MatchedKeyPointIndices = nullptr,
             std::vector<cv::DMatch> *goodMatches0 = nullptr, // good matches between queryDescriptors and trainDescriptor0
             std::vector<cv::DMatch> *goodMatches1 = nullptr  // good matches between queryDescriptors and trainDescriptor1
         );
@@ -72,6 +92,4 @@ class ORBFeature {
         int _nfeatures; 
 };
 
-class FeatureMatcher {
-
-}; 
+#endif // FEATURE_H

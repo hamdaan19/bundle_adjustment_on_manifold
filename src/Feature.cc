@@ -34,9 +34,11 @@ void ORBFeature::match(
     cv::Mat trainDescriptor0,
     cv::Mat trainDescriptor1,
     std::vector<std::vector<cv::DMatch>> *goodCommonMatches,
+    std::vector<int> *queryMatchedKeyPointIndices,
+    std::vector<int> *train1MatchedKeyPointIndices,
     std::vector<cv::DMatch> *goodMatches0,
-    std::vector<cv::DMatch> *goodMatches1
-) {
+    std::vector<cv::DMatch> *goodMatches1)
+{
     // Creating arrays to store matches
     std::vector<cv::DMatch> matches0, matches1;
     // Match query and first train descriptors
@@ -69,6 +71,13 @@ void ORBFeature::match(
             // Order of storing: index of the match is give precedence
             std::vector<cv::DMatch> matchesArray{matches0[i], matches1[i]};
             goodCommonMatches->push_back(matchesArray);
+
+            // Add keypoint indices to the unordered set. 
+            // We store keypoint indices in these unordered set for correspondence matching/data association
+            if (queryMatchedKeyPointIndices != nullptr)
+                queryMatchedKeyPointIndices->push_back(matches1[i].queryIdx);
+            if (train1MatchedKeyPointIndices != nullptr)
+                train1MatchedKeyPointIndices->push_back(matches1[i].trainIdx);
 
             if (goodMatches0 != nullptr) goodMatches0->push_back(matches0[i]); 
             if (goodMatches1 != nullptr) goodMatches1->push_back(matches1[i]); 
